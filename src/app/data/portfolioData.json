@@ -1,0 +1,246 @@
+{
+  "profile": {
+    "name": "Sharnabh Banerjee",
+    "role": "iOS Developer",
+    "experienceSummary": "10 Months",
+    "experienceLabel": "Internship Experience",
+    "bio": "High-performing iOS Developer specializing in building native, pixel-perfect mobile applications using SwiftUI and UIKit. Proven track record in modular system design, routing optimizations, and API integrations across 10 months of intensive internship placements.",
+    "coreTechnologies": [
+      "SwiftUI",
+      "UIKit",
+      "Combine",
+      "CoreLocation",
+      "AVFoundation",
+      "CoreData",
+      "CloudKit",
+      "Kotlin",
+      "NextJS"
+    ],
+    "linkedinUrl": "https://www.linkedin.com/in/sharnabh/",
+    "resumeUrl": "https://drive.google.com/file/d/1G4c0zZ-3TTJMGIhQCcuVML8FILjKglkW/view?usp=sharing",
+    "lastUpdated": "2026-07-02"
+  },
+  "projects": [
+    {
+      "id": "mindflow",
+      "title": "Mindflow",
+      "subtitle": "A mind mapping and flowcharting tool for Mac",
+      "description": "A premium, native macOS application optimized for layout visualization. Features automatic dynamic flowchart alignments, customizable Canvas styles, export options, and full system menu integration.",
+      "platform": "macOS (AppKit / Swift)",
+      "language": "Swift & Objective-C",
+      "technologies": [
+        "AppKit",
+        "CoreGraphics",
+        "CloudKit",
+        "AutoLayout"
+      ],
+      "role": "Lead iOS Developer",
+      "status": "Staging",
+      "linkType": "Github",
+      "linkUrl": "https://github.com/Sharnabh/MindFlow",
+      "imageUrl": "/images/mindflow_mockup.png",
+      "fallbackClass": "gradientMindflow",
+      "fallbackIcon": "🕸️",
+      "size": "large"
+    },
+    {
+      "id": "leolingo",
+      "title": "LeoLingo",
+      "subtitle": "A speech delay therapy app for kids",
+      "description": "An interactive, playful iOS app targeted at children with speech delays. Includes waveform recognition, interactive vocal lessons, and gamified animations featuring a roaring lion companion.",
+      "platform": "iOS (SwiftUI)",
+      "language": "Swift",
+      "technologies": [
+        "SwiftUI",
+        "Speech API",
+        "AVFoundation",
+        "Combine"
+      ],
+      "role": "Lead iOS Developer",
+      "status": "Completed (Staging)",
+      "linkType": "Github",
+      "linkUrl": "https://github.com/Sharnabh/LeoLingo",
+      "imageUrl": "/images/leolingo_mockup.png",
+      "fallbackClass": "gradientLeoLingo",
+      "fallbackIcon": "🦁",
+      "size": "small"
+    },
+    {
+      "id": "bulkmart",
+      "title": "Bulkmart",
+      "subtitle": "B2B e-commerce platform",
+      "description": "A comprehensive B2B wholesale marketplace simplifying procurement workflows, bulk pricing calculations, logistics booking, and invoice reporting for retail distributors.",
+      "platform": "iOS (SwiftUI)",
+      "language": "Swift",
+      "technologies": [
+        "SwiftUI",
+        "Combine",
+        "CoreData",
+        "Stripe API"
+      ],
+      "role": "Lead iOS Developer",
+      "status": "App Store Active",
+      "linkType": "AppStore",
+      "linkUrl": "https://apps.apple.com/in/app/bulkmart/id6762193786",
+      "imageUrl": "/images/bulkmart_mockup.png",
+      "fallbackClass": "gradientBulkmart",
+      "fallbackIcon": "🛒",
+      "size": "small"
+    },
+    {
+      "id": "7sales",
+      "title": "7Sales",
+      "subtitle": "Field CRM and route management",
+      "description": "A field sales coordination application mapping store outlets, generating optimized driving directions, enabling real-time order bookings, and syncing catalog availability for reps.",
+      "platform": "iOS (SwiftUI / Google Maps)",
+      "language": "Swift",
+      "technologies": [
+        "SwiftUI",
+        "Google Maps API",
+        "CoreLocation",
+        "WebSockets"
+      ],
+      "role": "Lead iOS Developer",
+      "status": "App Store Active",
+      "linkType": "AppStore",
+      "linkUrl": "https://apps.apple.com/in/app/7sales-manage-field-staff/id6449617122",
+      "imageUrl": "/images/sevensales_mockup.png",
+      "fallbackClass": "gradient7Sales",
+      "fallbackIcon": "📊",
+      "size": "small"
+    }
+  ],
+  "experience": [
+    {
+      "id": "7systems",
+      "title": "Lead iOS Developer",
+      "company": "7Systems (Internship)",
+      "period": "March 2026 - Present",
+      "achievements": [
+        "Built Bulk Mart, a full-scale e-commerce iOS app from scratch using Swift with scalable architecture and complete user flows (catalog, cart, checkout).",
+        "Designed adaptive, modern UI with iOS-native patterns, including custom liquid glass effects and version-aware layouts.",
+        "Optimized performance, navigation, and state management, improving responsiveness and user experience."
+      ],
+      "tags": [
+        "Swift",
+        "SwiftUI",
+        "Google Maps API",
+        "Liquid Glass"
+      ]
+    },
+    {
+      "id": "yachthree",
+      "title": "Lead iOS Developer",
+      "company": "YachThree (Internship)",
+      "period": "September 2025 - February 2026",
+      "achievements": [
+        "Developed Agent Caller, an AI-powered telephony system with real-time voice processing and spam detection.",
+        "Co-built Agentic Pay, enabling conversational commerce with automated payments (UPI, cards, crypto).",
+        "Engineered backend APIs and iOS interfaces, improving system reliability and latency."
+      ],
+      "tags": [
+        "SwiftUI",
+        "Node.js",
+        "AI / Telephony",
+        "APIs",
+        "Conversational Commerce"
+      ]
+    },
+    {
+      "id": "infosys",
+      "title": "Lead iOS Developer",
+      "company": "Infosys (Internship)",
+      "period": "March 2025 - April 2025",
+      "achievements": [
+        "Led a 10-member team to develop an iOS application using Agile methodologies.",
+        "Managed sprints, backlog, and workflows using JIRA.",
+        "Mentored developers and enforced best coding practices."
+      ],
+      "tags": [
+        "iOS App Development",
+        "Agile",
+        "JIRA",
+        "Sprints"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Swift / SwiftUI",
+      "icon": "🍎",
+      "level": "Advanced"
+    },
+    {
+      "name": "Google Maps / Location",
+      "icon": "🗺️",
+      "level": "Advanced"
+    },
+    {
+      "name": "Next.js / TS",
+      "icon": "🌐",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Node.js / Express",
+      "icon": "🟢",
+      "level": "Intermediate"
+    },
+    {
+      "name": "Rust / CLI",
+      "icon": "🦀",
+      "level": "Beginner"
+    },
+    {
+      "name": "PostgreSQL / SQL",
+      "icon": "🗄️",
+      "level": "Intermediate"
+    }
+  ],
+  "shippedProducts": {
+    "metrics": {
+      "totalDownloads": "2 Rest. Installs",
+      "avgRating": "5.0",
+      "activeUsers": "2 active QR",
+      "liveApps": "2"
+    },
+    "products": [
+      {
+        "id": "zynk",
+        "title": "Zynk",
+        "subtitle": "Meeting & Scheduling Platform",
+        "description": "A platform for managing and scheduling all the meetings dynamically across calendar interfaces.",
+        "badge": "Staging",
+        "rating": "0.0",
+        "ratingsCount": "0 Ratings",
+        "tags": [
+          "React Native",
+          "NextJS",
+          "NestJS"
+        ],
+        "hasDownloads": false,
+        "icon": "📅",
+        "buttonText": "In Dev",
+        "linkUrl": "https://zynk.marketing.sbdevstudio.in"
+      },
+      {
+        "id": "foodies",
+        "title": "Foodies",
+        "subtitle": "POS Billing & Ordering System",
+        "description": "A POS product billing, ordering, and delivering system with 2 active restaurants using the QR Ordering system.",
+        "badge": "Live",
+        "rating": "5.0",
+        "ratingsCount": "2 Rest. Active",
+        "tags": [
+          "React Native",
+          "NextJS",
+          "NestJS"
+        ],
+        "hasDownloads": true,
+        "icon": "🍔",
+        "buttonText": "GET",
+        "linkUrl": "https://foodies.sbdevstudio.in"
+      }
+    ],
+    "codePreview": "import StoreKit\n\nclass ProductManager: ObservableObject {\n    @Published var products: [Product] = []\n    \n    func fetchProducts() async {\n        do {\n            products = try await Product.products(for: [\"com.sbdevstudio.zynk\", \"com.sbdevstudio.foodies\"])\n        } catch {\n            print(\"Failed to fetch products: \\(error)\")\n        }\n    }\n}"
+  }
+}
