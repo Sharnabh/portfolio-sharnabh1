@@ -147,6 +147,12 @@ export function EditorWorkspace({
   editorLineNumbers,
   editorLineWrapping
 }: EditorWorkspaceProps) {
+  const [contactName, setContactName] = React.useState("");
+  const [contactEmail, setContactEmail] = React.useState("");
+  const [contactMessage, setContactMessage] = React.useState("");
+  const [isContactSending, setIsContactSending] = React.useState(false);
+  const [terminalLogs, setTerminalLogs] = React.useState<string[]>([]);
+
   if (openTabs.length === 0) {
     return (
       <div className={styles.noSelection} style={{ marginTop: "100px" }}>
@@ -729,6 +735,252 @@ export function EditorWorkspace({
                   })}
                 </div>
               </div>
+          </div>
+        </div>
+      )}
+
+      {/* ---------------------------------------------------- */}
+      {/* activeFile === "Contact.swift" */}
+      {/* ---------------------------------------------------- */}
+      {activeFile === "Contact.swift" && (
+        <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "20px", height: "100%", overflowY: "auto", width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {/* Terminal Title Bar */}
+            <div 
+              style={{ 
+                background: "rgba(30, 30, 36, 0.8)", 
+                border: "1px solid var(--border-color)", 
+                borderBottom: "none",
+                borderTopLeftRadius: "8px", 
+                borderTopRightRadius: "8px", 
+                padding: "10px 16px", 
+                display: "flex", 
+                alignItems: "center" 
+              }}
+            >
+              {/* macOS window controls */}
+              <div style={{ display: "flex", gap: "6px" }}>
+                <span style={{ width: "11px", height: "11px", borderRadius: "50%", backgroundColor: "#ff453a", display: "inline-block" }}></span>
+                <span style={{ width: "11px", height: "11px", borderRadius: "50%", backgroundColor: "#ff9f0a", display: "inline-block" }}></span>
+                <span style={{ width: "11px", height: "11px", borderRadius: "50%", backgroundColor: "#30d158", display: "inline-block" }}></span>
+              </div>
+              <span style={{ flex: 1, textAlign: "center", fontSize: "11px", color: "var(--text-muted)", fontFamily: "var(--font-mono)", marginRight: "33px" }}>
+                Contact.swift — bash — 80×24
+              </span>
+            </div>
+
+            {/* Terminal Window Content */}
+            <div 
+              style={{ 
+                background: "rgba(0, 0, 0, 0.35)", 
+                border: "1px solid var(--border-color)", 
+                borderBottomLeftRadius: "8px", 
+                borderBottomRightRadius: "8px", 
+                padding: "24px", 
+                fontFamily: "var(--font-mono)", 
+                fontSize: "12px", 
+                lineHeight: "1.6",
+                color: "#a9b2c3"
+              }}
+            >
+              {/* Header Initialization lines */}
+              <div style={{ color: "#5c6370", marginBottom: "16px" }}>
+                <div style={{ color: "#98c379" }}>System initialization complete.</div>
+                <div>Establishing secure connection to developer instance...</div>
+                <div style={{ color: "#61afef" }}>Connection established.</div>
+                <div style={{ color: "#e5c07b" }}>Type your message below. Required fields: --name, --email, --message.</div>
+                <div style={{ marginTop: "8px", color: "#abb2bf" }}>
+                  <span style={{ color: "#e06c75" }}>guest@portfolio</span>:~$ ./send_message.sh
+                </div>
+              </div>
+
+              {/* Form Input fields */}
+              <form 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!contactName || !contactEmail || !contactMessage) {
+                    triggerToast("Error: Missing required fields!");
+                    return;
+                  }
+                  
+                  // Start submission sequence
+                  setIsContactSending(true);
+                  setTerminalLogs([
+                    `guest@portfolio:~$ ./send_message.sh --name="${contactName}" --email="${contactEmail}"`,
+                    `[1/4] Establishing secure handshake with Formspree gateway...`
+                  ]);
+                  triggerToast("Transmitting message to Sharnabh...");
+                  
+                  try {
+                    // Handshake delay simulation
+                    await new Promise(resolve => setTimeout(resolve, 600));
+                    
+                    setTerminalLogs(prev => [...prev, `[2/4] Payload connection established. Transmitting bytes...`]);
+                    
+                    const response = await fetch("https://formspree.io/f/xwkgzdap", {
+                      method: "POST",
+                      body: JSON.stringify({
+                        name: contactName,
+                        email: contactEmail,
+                        message: contactMessage
+                      }),
+                      headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                      }
+                    });
+                    
+                    await new Promise(resolve => setTimeout(resolve, 600));
+
+                    if (response.ok) {
+                      setTerminalLogs(prev => [
+                        ...prev, 
+                        `[3/4] Response received: HTTP/2 200 OK.`,
+                        `[4/4] Secure channel closed.`,
+                        `SUCCESS: Message successfully delivered to banerjeesharnabh@gmail.com!`
+                      ]);
+                      setContactName("");
+                      setContactEmail("");
+                      setContactMessage("");
+                      triggerToast("Success: Message delivered!");
+                    } else {
+                      const data = await response.json();
+                      const errMsg = data.errors ? data.errors.map((err: any) => err.message).join(", ") : "API Error";
+                      setTerminalLogs(prev => [
+                        ...prev,
+                        `[3/4] Response received: HTTP/2 ${response.status} Error.`,
+                        `ERROR: ${errMsg}`,
+                        `FAILED: Transmission aborted.`
+                      ]);
+                      triggerToast("Error: Submission failed!");
+                    }
+                  } catch (error) {
+                    setTerminalLogs(prev => [
+                      ...prev,
+                      `ERROR: Network request failed. Check internet connection.`,
+                      `FAILED: Transmission aborted.`
+                    ]);
+                    triggerToast("Error: Network failure!");
+                  } finally {
+                    setIsContactSending(false);
+                  }
+                }}
+                style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+              >
+                <div>
+                  <div style={{ color: "#e06c75", marginBottom: "4px" }}>&gt; Enter Name:</div>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="John Doe"
+                    value={contactName}
+                    onChange={(e) => setContactName(e.target.value)}
+                    disabled={isContactSending}
+                    style={{
+                      width: "100%",
+                      maxWidth: "500px",
+                      background: "rgba(255, 255, 255, 0.03)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "6px",
+                      padding: "8px 12px",
+                      color: "#ffffff",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "13px",
+                      outline: "none"
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <div style={{ color: "#e06c75", marginBottom: "4px" }}>&gt; Enter Email:</div>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="john@example.com"
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
+                    disabled={isContactSending}
+                    style={{
+                      width: "100%",
+                      maxWidth: "500px",
+                      background: "rgba(255, 255, 255, 0.03)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "6px",
+                      padding: "8px 12px",
+                      color: "#ffffff",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "13px",
+                      outline: "none"
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <div style={{ color: "#e06c75", marginBottom: "4px" }}>&gt; Enter Message Payload:</div>
+                  <textarea
+                    name="message"
+                    required
+                    rows={6}
+                    placeholder="Write your message here..."
+                    value={contactMessage}
+                    onChange={(e) => setContactMessage(e.target.value)}
+                    disabled={isContactSending}
+                    style={{
+                      width: "100%",
+                      maxWidth: "600px",
+                      background: "rgba(255, 255, 255, 0.03)",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "6px",
+                      padding: "10px 12px",
+                      color: "#ffffff",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "13px",
+                      outline: "none",
+                      resize: "vertical"
+                    }}
+                  />
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}>
+                  <span style={{ color: "#abb2bf" }}>guest@portfolio:~$ </span>
+                  <button
+                    type="submit"
+                    disabled={isContactSending}
+                    style={{
+                      background: isContactSending ? "rgba(255, 255, 255, 0.1)" : "#30d158",
+                      color: isContactSending ? "var(--text-muted)" : "#000000",
+                      border: "none",
+                      borderRadius: "6px",
+                      padding: "6px 14px",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "11px",
+                      fontWeight: "bold",
+                      cursor: isContactSending ? "default" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px"
+                    }}
+                  >
+                    {isContactSending ? "executing..." : "execute ▷"}
+                  </button>
+                  <span className={styles.terminalCursor} style={{ display: "inline-block", width: "8px", height: "15px", backgroundColor: "#abb2bf" }}></span>
+                </div>
+
+                {/* Console Log Outputs */}
+                {terminalLogs.length > 0 && (
+                  <div style={{ marginTop: "16px", borderTop: "1px solid var(--border-color)", paddingTop: "16px", color: "#61afef", fontFamily: "var(--font-mono)", fontSize: "11px" }}>
+                    <div style={{ color: "#e5c07b", fontWeight: "bold", marginBottom: "6px" }}>console output:</div>
+                    {terminalLogs.map((log, idx) => (
+                      <div key={idx} style={{ color: log.startsWith("SUCCESS") ? "#98c379" : log.startsWith("ERROR") || log.startsWith("FAILED") ? "#e06c75" : "#abb2bf", marginTop: "4px" }}>
+                        {log}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </form>
+            </div>
           </div>
         </div>
       )}

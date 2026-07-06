@@ -32,6 +32,14 @@ const CheckmarkIcon = () => (
   </svg>
 );
 
+const ExternalLinkIcon = () => (
+  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: "3px", display: "inline-block", verticalAlign: "middle" }}>
+    <path d="M11 1H15V5" />
+    <path d="M9 7L15 1" />
+    <path d="M12 9V14C12 14.55 11.55 15 11 15H2C1.45 15 1 14.55 1 14V5C1 4.45 1.45 4 2 4H7" />
+  </svg>
+);
+
 interface InspectorProps {
   activeFile: string;
   selectedProject: Project | null;
@@ -127,108 +135,162 @@ export function Inspector({
         {/* ==================================================== */}
         {activeInspectorTab === "identity" && (
           <>
-            <div className={styles.inspectorSection}>
-              <span className={styles.sectionTitle}>{activeFile === "Products.plist" ? "FILE STATUS" : "Identity"}</span>
-              <div className={styles.metadataGrid}>
-                <span className={styles.metaLabel}>Type:</span>
-                <span className={styles.metaValue}>
-                  {activeFile 
-                    ? (activeFile.endsWith(".swift") 
-                        ? "Swift Source File" 
-                        : activeFile.endsWith(".md") 
-                          ? "Markdown Document" 
-                          : "Property List") 
-                    : "None"}
-                </span>
-                
-                <span className={styles.metaLabel}>Location:</span>
-                <span className={styles.metaValue}>
-                  {activeFile 
-                    ? (activeFile === "Products.plist" 
-                        ? "/Root/.../Products.plist" 
-                        : `~/Portfolio/${activeFile}`) 
-                    : "No file open"}
-                </span>
-                
-                {activeFile === "Products.plist" ? (
-                  <>
-                    <span className={styles.metaLabel}>Size:</span>
-                    <span className={styles.metaValue}>4 KB</span>
-                  </>
-                ) : (
-                  <>
-                    <span className={styles.metaLabel}>Target:</span>
-                    <span className={styles.metaValue}>PortfolioApp</span>
-                  </>
-                )}
-              </div>
-            </div>
-
-            {activeFile === "Products.plist" ? (
-              <div className={styles.inspectorSection}>
-                <span className={styles.sectionTitle}>APP STORE CONNECT</span>
-                <div className={styles.metadataGrid}>
-                  <span className={styles.metaLabel}>Team ID:</span>
-                  <span className={styles.metaValue}>A1B2C3D4E5</span>
-                  
-                  <span className={styles.metaLabel}>Certificates:</span>
-                  <span className={styles.metaValue} style={{ color: "#30d158", fontWeight: "bold", display: "flex", alignItems: "center" }}>
-                    <CheckmarkIcon /> Valid
-                  </span>
-                  
-                  <span className={styles.metaLabel}>Profiles:</span>
-                  <span className={styles.metaValue}>Managed</span>
+            {activeFile === "Contact.swift" ? (
+              <>
+                <div className={styles.inspectorSection}>
+                  <span className={styles.sectionTitle}>CONNECTION</span>
+                  <div className={styles.metadataGrid}>
+                    <span className={styles.metaLabel}>Status:</span>
+                    <span className={styles.metaValue} style={{ display: "flex", alignItems: "center", gap: "4px", color: "#30d158", fontWeight: "bold" }}>
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#30d158", display: "inline-block" }}></span> Online
+                    </span>
+                    <span className={styles.metaLabel}>Protocol:</span>
+                    <span className={styles.metaValue}>HTTPS / wss://</span>
+                    <span className={styles.metaLabel}>Latency:</span>
+                    <span className={styles.metaValue}>12ms</span>
+                  </div>
                 </div>
-              </div>
+
+                <div className={styles.inspectorSection}>
+                  <span className={styles.sectionTitle}>ENDPOINT</span>
+                  <div className={styles.metadataGrid}>
+                    <span className={styles.metaLabel}>Method:</span>
+                    <span className={styles.metaValue} style={{ color: "#ff9f0a", fontWeight: "bold" }}>POST</span>
+                    <span className={styles.metaLabel}>URL:</span>
+                    <span className={styles.metaValue} style={{ fontFamily: "var(--font-mono)", fontSize: "10px" }}>/api/v1/message</span>
+                    <span className={styles.metaLabel}>Auth:</span>
+                    <span className={styles.metaValue}>Bearer Token</span>
+                  </div>
+                </div>
+
+                <div className={styles.inspectorSection}>
+                  <span className={styles.sectionTitle}>ALTERNATIVE COMM</span>
+                  <div className={styles.metadataGrid}>
+                    <span className={styles.metaLabel}>email:</span>
+                    <span className={styles.metaValue}>
+                      <a href="mailto:banerjeesharnabh@gmail.com" style={{ color: "var(--text-primary)", textDecoration: "none" }}>banerjeesharnabh@gmail.com</a>
+                    </span>
+                    <span className={styles.metaLabel}>github:</span>
+                    <span className={styles.metaValue}>
+                      <a href="https://github.com/Sharnabh" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-color)", textDecoration: "none", display: "flex", alignItems: "center", gap: "2px" }}>
+                        github <ExternalLinkIcon />
+                      </a>
+                    </span>
+                    <span className={styles.metaLabel}>linkedin:</span>
+                    <span className={styles.metaValue}>
+                      <a href="https://www.linkedin.com/in/sharnabh/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-color)", textDecoration: "none", display: "flex", alignItems: "center", gap: "2px" }}>
+                        linkedin <ExternalLinkIcon />
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </>
             ) : (
-              <div className={styles.inspectorSection}>
-                <span className={styles.sectionTitle}>Selected Item</span>
-                <div className={styles.detailBox}>
-                  {selectedProject ? (
-                    <div>
-                      <div className={styles.selectedDetailHeader}>
-                        <span className={styles.selectedIcon}>{selectedProject.fallbackIcon}</span>
-                        <div>
-                          <span className={styles.selectedTitle}>{selectedProject.title}</span>
-                          <span className={styles.selectedSubtitle}>{selectedProject.platform}</span>
-                        </div>
-                      </div>
-                      <p className={styles.selectedDesc} style={{ margin: "10px 0" }}>{selectedProject.description}</p>
-                      
-                      <div className={styles.specList}>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>Language:</span>
-                          <span className={styles.specValue}>{selectedProject.language}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>Role:</span>
-                          <span className={styles.specValue}>{selectedProject.role}</span>
-                        </div>
-                        <div className={styles.specItem}>
-                          <span className={styles.specLabel}>Build Status:</span>
-                          <span className={styles.specValue}>{selectedProject.status}</span>
-                        </div>
-                      </div>
-
-                      <div className={styles.linksContainer}>
-                        <a
-                          href={selectedProject.linkUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`${styles.projectLinkBtn} ${styles.primaryLink}`}
-                        >
-                          {selectedProject.linkType === "Github" ? "View GitHub Repo" : "View on App Store"}
-                        </a>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className={styles.noSelection}>
-                      <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><InfoIcon /> No Selection</span>
-                      <p style={{ fontSize: "11px" }}>Select a project card in the editor to inspect repository links, technical specifications, and metadata.</p>
-                    </div>
-                  )}
+              <>
+                <div className={styles.inspectorSection}>
+                  <span className={styles.sectionTitle}>{activeFile === "Products.plist" ? "FILE STATUS" : "Identity"}</span>
+                  <div className={styles.metadataGrid}>
+                    <span className={styles.metaLabel}>Type:</span>
+                    <span className={styles.metaValue}>
+                      {activeFile 
+                        ? (activeFile.endsWith(".swift") 
+                            ? "Swift Source File" 
+                            : activeFile.endsWith(".md") 
+                              ? "Markdown Document" 
+                              : "Property List") 
+                        : "None"}
+                    </span>
+                    
+                    <span className={styles.metaLabel}>Location:</span>
+                    <span className={styles.metaValue}>
+                      {activeFile 
+                        ? (activeFile === "Products.plist" 
+                            ? "/Root/.../Products.plist" 
+                            : `~/Portfolio/${activeFile}`) 
+                        : "No file open"}
+                    </span>
+                    
+                    {activeFile === "Products.plist" ? (
+                      <>
+                        <span className={styles.metaLabel}>Size:</span>
+                        <span className={styles.metaValue}>4 KB</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className={styles.metaLabel}>Target:</span>
+                        <span className={styles.metaValue}>PortfolioApp</span>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+
+                {activeFile === "Products.plist" ? (
+                  <div className={styles.inspectorSection}>
+                    <span className={styles.sectionTitle}>APP STORE CONNECT</span>
+                    <div className={styles.metadataGrid}>
+                      <span className={styles.metaLabel}>Team ID:</span>
+                      <span className={styles.metaValue}>A1B2C3D4E5</span>
+                      
+                      <span className={styles.metaLabel}>Certificates:</span>
+                      <span className={styles.metaValue} style={{ color: "#30d158", fontWeight: "bold", display: "flex", alignItems: "center" }}>
+                        <CheckmarkIcon /> Valid
+                      </span>
+                      
+                      <span className={styles.metaLabel}>Profiles:</span>
+                      <span className={styles.metaValue}>Managed</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.inspectorSection}>
+                    <span className={styles.sectionTitle}>Selected Item</span>
+                    <div className={styles.detailBox}>
+                      {selectedProject ? (
+                        <div>
+                          <div className={styles.selectedDetailHeader}>
+                            <span className={styles.selectedIcon}>{selectedProject.fallbackIcon}</span>
+                            <div>
+                              <span className={styles.selectedTitle}>{selectedProject.title}</span>
+                              <span className={styles.selectedSubtitle}>{selectedProject.platform}</span>
+                            </div>
+                          </div>
+                          <p className={styles.selectedDesc} style={{ margin: "10px 0" }}>{selectedProject.description}</p>
+                          
+                          <div className={styles.specList}>
+                            <div className={styles.specItem}>
+                              <span className={styles.specLabel}>Language:</span>
+                              <span className={styles.specValue}>{selectedProject.language}</span>
+                            </div>
+                            <div className={styles.specItem}>
+                              <span className={styles.specLabel}>Role:</span>
+                              <span className={styles.specValue}>{selectedProject.role}</span>
+                            </div>
+                            <div className={styles.specItem}>
+                              <span className={styles.specLabel}>Build Status:</span>
+                              <span className={styles.specValue}>{selectedProject.status}</span>
+                            </div>
+                          </div>
+
+                          <div className={styles.linksContainer}>
+                            <a
+                              href={selectedProject.linkUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`${styles.projectLinkBtn} ${styles.primaryLink}`}
+                            >
+                              {selectedProject.linkType === "Github" ? "View GitHub Repo" : "View on App Store"}
+                            </a>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className={styles.noSelection}>
+                          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><InfoIcon /> No Selection</span>
+                          <p style={{ fontSize: "11px" }}>Select a project card in the editor to inspect repository links, technical specifications, and metadata.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

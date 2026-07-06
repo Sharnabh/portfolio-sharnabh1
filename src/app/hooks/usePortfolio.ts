@@ -11,7 +11,8 @@ export function usePortfolio() {
     "Main.swift",
     "Experience.md",
     "Projects.swift",
-    "Products.plist"
+    "Products.plist",
+    "Contact.swift"
   ]);
 
   // Sidebar Collapse States
