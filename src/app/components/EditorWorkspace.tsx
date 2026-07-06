@@ -129,6 +129,13 @@ interface EditorWorkspaceProps {
   editorTabWidth: number;
   editorLineNumbers: boolean;
   editorLineWrapping: boolean;
+  showConsole: boolean;
+  setShowConsole: (show: boolean) => void;
+  consoleLogs: string[];
+  cpuUsage: number;
+  ramUsage: number;
+  clearConsole: () => void;
+  isRunning: boolean;
 }
 
 export function EditorWorkspace({
@@ -145,7 +152,14 @@ export function EditorWorkspace({
   editorFontSize,
   editorTabWidth,
   editorLineNumbers,
-  editorLineWrapping
+  editorLineWrapping,
+  showConsole,
+  setShowConsole,
+  consoleLogs,
+  cpuUsage,
+  ramUsage,
+  clearConsole,
+  isRunning
 }: EditorWorkspaceProps) {
   const [contactName, setContactName] = React.useState("");
   const [contactEmail, setContactEmail] = React.useState("");
@@ -973,7 +987,7 @@ export function EditorWorkspace({
                   <div style={{ marginTop: "16px", borderTop: "1px solid var(--border-color)", paddingTop: "16px", color: "#61afef", fontFamily: "var(--font-mono)", fontSize: "11px" }}>
                     <div style={{ color: "#e5c07b", fontWeight: "bold", marginBottom: "6px" }}>console output:</div>
                     {terminalLogs.map((log, idx) => (
-                      <div key={idx} style={{ color: log.startsWith("SUCCESS") ? "#98c379" : log.startsWith("ERROR") || log.startsWith("FAILED") ? "#e06c75" : "#abb2bf", marginTop: "4px" }}>
+                      <div key={idx} style={{ color: log.startsWith("SUCCESS") ? "#61afef" : log.startsWith("ERROR") || log.startsWith("FAILED") ? "#e06c75" : "#abb2bf", marginTop: "4px" }}>
                         {log}
                       </div>
                     ))}
@@ -984,7 +998,82 @@ export function EditorWorkspace({
           </div>
         </div>
       )}
+      </div>
+
+      {/* Xcode Bottom Console Drawer */}
+      {showConsole && (
+        <div style={{
+          height: "200px",
+          minHeight: "200px",
+          background: "#19191d",
+          borderTop: "1px solid var(--border-color)",
+          display: "flex",
+          flexDirection: "column",
+          fontFamily: "var(--font-mono)",
+          fontSize: "11px",
+          zIndex: 10
+        }}>
+          {/* Console Header / Action Toolbar */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            background: "rgba(0, 0, 0, 0.2)",
+            borderBottom: "1px solid var(--border-color)",
+            padding: "6px 16px",
+            height: "30px",
+            color: "var(--text-muted)",
+            fontSize: "10px"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ color: "var(--text-secondary)" }}>Output: All Output</span>
+              {isRunning && (
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", borderLeft: "1px solid var(--border-color)", paddingLeft: "10px" }}>
+                  <span style={{ color: "var(--text-secondary)" }}>CPU: {cpuUsage}%</span>
+                  <span style={{ color: "var(--text-secondary)" }}>RAM: {ramUsage}MB</span>
+                </div>
+              )}
+            </div>
+            <div style={{ display: "flex", gap: "12px" }}>
+              <button 
+                onClick={clearConsole} 
+                style={{ background: "none", border: "none", color: "var(--text-secondary)", cursor: "pointer", fontSize: "10px", padding: 0 }}
+                title="Clear Console"
+              >
+                Clear Output
+              </button>
+              <button 
+                onClick={() => setShowConsole(false)} 
+                style={{ background: "none", border: "none", color: "var(--text-secondary)", cursor: "pointer", fontSize: "10px", padding: 0 }}
+                title="Hide Console"
+              >
+                Hide
+              </button>
+            </div>
+          </div>
+
+          {/* Console Logs Display */}
+          <div style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "12px 16px",
+            color: "#a9b2c3",
+            lineHeight: "1.6"
+          }}>
+            {consoleLogs.length === 0 ? (
+              <div style={{ color: "var(--text-muted)" }}>No console output logs available.</div>
+            ) : (
+              consoleLogs.map((log, idx) => (
+                <div key={idx} style={{ 
+                  color: log.startsWith("[BUILD]") ? "#61afef" : log.startsWith("[RUN]") ? "#98c379" : log.includes("SUCCESS") ? "#61afef" : log.includes("ERROR") || log.includes("FAILED") ? "#e06c75" : "#abb2bf" 
+                }}>
+                  {log}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
     </div>
-  </div>
   );
 }

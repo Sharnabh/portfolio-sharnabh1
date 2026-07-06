@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../page.module.css";
 
 const CheckmarkIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "6px", color: "#30d158" }}>
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "6px", color: "#61afef" }}>
     <path d="M13.5 4.5l-7 7.5-3.5-3.5" />
   </svg>
 );

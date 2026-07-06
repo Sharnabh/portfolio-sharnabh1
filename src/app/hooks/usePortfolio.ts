@@ -46,6 +46,103 @@ export function usePortfolio() {
   const [navigatorWidth, setNavigatorWidth] = useState<number>(260);
   const [inspectorWidth, setInspectorWidth] = useState<number>(290);
 
+  // Xcode Build & Run States
+  const [isBuilding, setIsBuilding] = useState<boolean>(false);
+  const [buildProgress, setBuildProgress] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [showConsole, setShowConsole] = useState<boolean>(false);
+  const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
+  const [cpuUsage, setCpuUsage] = useState<number>(0);
+  const [ramUsage, setRamUsage] = useState<number>(0);
+
+  // Simulate active CPU/RAM usage fluctuations when running
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isRunning) {
+      setCpuUsage(Math.floor(Math.random() * 4) + 1); // 1-4%
+      setRamUsage(12.4); // Base RAM usage
+      
+      timer = setInterval(() => {
+        setCpuUsage(Math.floor(Math.random() * 5) + 1); // 1-5%
+        setRamUsage(prev => {
+          const delta = (Math.random() * 0.4) - 0.2; // +/- 0.2MB
+          return Number((prev + delta).toFixed(1));
+        });
+      }, 1500);
+    } else {
+      setCpuUsage(0);
+      setRamUsage(0);
+    }
+    return () => clearInterval(timer);
+  }, [isRunning]);
+
+  // Trigger Build Sequence
+  const buildProject = () => {
+    if (isBuilding || isRunning) return;
+    setIsBuilding(true);
+    setShowConsole(true);
+    setBuildProgress(0);
+    setConsoleLogs([
+      "[BUILD] Initializing compiler configuration...",
+      "[BUILD] Reading Main.swift...",
+      "[BUILD] Reading Projects.swift...",
+      "[BUILD] Reading Products.plist..."
+    ]);
+
+    // Stage 1 (25% progress)
+    setTimeout(() => {
+      setBuildProgress(25);
+      setConsoleLogs(prev => [...prev, "[BUILD] Checking module imports & bundle identifiers... OK"]);
+    }, 400);
+
+    // Stage 2 (50% progress)
+    setTimeout(() => {
+      setBuildProgress(50);
+      setConsoleLogs(prev => [...prev, "[BUILD] Optimizing layout constraints & assets... OK"]);
+    }, 800);
+
+    // Stage 3 (75% progress)
+    setTimeout(() => {
+      setBuildProgress(75);
+      setConsoleLogs(prev => [...prev, "[BUILD] Linking application frameworks... OK"]);
+    }, 1200);
+
+    // Stage 4 (100% progress)
+    setTimeout(() => {
+      setBuildProgress(100);
+      setConsoleLogs(prev => [...prev, "[BUILD] Compilation Succeeded. Binary artifact generated.", "[BUILD] Build complete (1.6s)"]);
+      setIsBuilding(false);
+    }, 1600);
+  };
+
+  // Trigger Run / Terminate Sequence
+  const runProject = () => {
+    if (isBuilding) return;
+
+    if (isRunning) {
+      // Terminate
+      setIsRunning(false);
+      setConsoleLogs(prev => [...prev, "[RUN] Terminating process...", "[RUN] Program ended with exit code: 0"]);
+      triggerToast("Sandbox execution stopped.");
+    } else {
+      // Start Sandbox
+      setShowConsole(true);
+      setConsoleLogs(prev => [
+        ...prev,
+        "[RUN] Launching PortfolioApp in secure Sandbox container...",
+        "[RUN] Process initialized (PID 4820)",
+        "[RUN] Listening for events. Sandbox environment operational."
+      ]);
+      setIsRunning(true);
+      triggerToast("Sandbox execution started.");
+    }
+  };
+
+  // Clear Console logs
+  const clearConsole = () => {
+    setConsoleLogs([]);
+  };
+
   // Sync state theme values to the HTML attribute
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -122,6 +219,15 @@ export function usePortfolio() {
     navigatorWidth,
     inspectorWidth,
 
+    // Sandbox & Build States
+    isBuilding,
+    buildProgress,
+    isRunning,
+    showConsole,
+    consoleLogs,
+    cpuUsage,
+    ramUsage,
+
     // Actions & State Setters
     openTab,
     closeTab,
@@ -142,6 +248,10 @@ export function usePortfolio() {
     setEditorLineNumbers,
     setEditorLineWrapping,
     setNavigatorWidth,
-    setInspectorWidth
+    setInspectorWidth,
+    buildProject,
+    runProject,
+    clearConsole,
+    setShowConsole
   };
 }

@@ -35,6 +35,11 @@ export default function Home() {
           setIsLeftSidebarCollapsed={portfolio.setIsLeftSidebarCollapsed}
           setIsRightSidebarCollapsed={portfolio.setIsRightSidebarCollapsed}
           triggerToast={portfolio.triggerToast}
+          buildProject={portfolio.buildProject}
+          runProject={portfolio.runProject}
+          isBuilding={portfolio.isBuilding}
+          buildProgress={portfolio.buildProgress}
+          isRunning={portfolio.isRunning}
         />
 
         <EditorWorkspace
@@ -52,6 +57,13 @@ export default function Home() {
           editorTabWidth={portfolio.editorTabWidth}
           editorLineNumbers={portfolio.editorLineNumbers}
           editorLineWrapping={portfolio.editorLineWrapping}
+          showConsole={portfolio.showConsole}
+          setShowConsole={portfolio.setShowConsole}
+          consoleLogs={portfolio.consoleLogs}
+          cpuUsage={portfolio.cpuUsage}
+          ramUsage={portfolio.ramUsage}
+          clearConsole={portfolio.clearConsole}
+          isRunning={portfolio.isRunning}
         />
       </main>
 

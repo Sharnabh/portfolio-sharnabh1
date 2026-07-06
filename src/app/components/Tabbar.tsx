@@ -64,6 +64,12 @@ const PlayIcon = () => (
   </svg>
 );
 
+const StopIcon = () => (
+  <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor">
+    <rect x="2" y="2" width="8" height="8" rx="1" />
+  </svg>
+);
+
 const BuildIcon = () => (
   <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M10 2.5a2.5 2.5 0 0 0-3.5 0L3.5 5.5l-2-1L1 5.5l2 2 1.5-1.5 3-3a2.5 2.5 0 0 0 .5-.5z" />
@@ -81,6 +87,11 @@ interface TabbarProps {
   setIsLeftSidebarCollapsed: (collapsed: boolean) => void;
   setIsRightSidebarCollapsed: (collapsed: boolean) => void;
   triggerToast: (msg: string) => void;
+  buildProject: () => void;
+  runProject: () => void;
+  isBuilding: boolean;
+  buildProgress: number;
+  isRunning: boolean;
 }
 
 export function Tabbar({
@@ -92,7 +103,12 @@ export function Tabbar({
   isRightSidebarCollapsed,
   setIsLeftSidebarCollapsed,
   setIsRightSidebarCollapsed,
-  triggerToast
+  triggerToast,
+  buildProject,
+  runProject,
+  isBuilding,
+  buildProgress,
+  isRunning
 }: TabbarProps) {
   const getFileIcon = (fileName: string) => {
     if (fileName.endsWith(".swift")) return <SwiftFileIcon />;
@@ -104,6 +120,11 @@ export function Tabbar({
 
   return (
     <div className={styles.tabbar}>
+      <style>{`
+        @keyframes xcodeSpin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
       <div className={styles.tabsContainer}>
         {openTabs.map((tab) => (
           <div
@@ -120,20 +141,77 @@ export function Tabbar({
         ))}
       </div>
 
+      {/* Xcode Center Status Bar */}
+      {(isBuilding || isRunning) && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "rgba(0, 0, 0, 0.25)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "6px",
+          height: "22px",
+          padding: "0 12px",
+          fontSize: "11px",
+          fontFamily: "var(--font-mono)",
+          color: "var(--text-secondary)",
+          maxWidth: "340px",
+          flex: 1,
+          margin: "0 16px",
+          position: "relative",
+          overflow: "hidden"
+        }}>
+          {isBuilding ? (
+            <div style={{ display: "flex", alignItems: "center", width: "100%", height: "100%", justifyContent: "center" }}>
+              <div style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: `${buildProgress}%`,
+                backgroundColor: "rgba(0, 122, 255, 0.15)",
+                transition: "width 0.3s ease",
+                zIndex: 0
+              }}></div>
+              <span style={{ zIndex: 1, display: "flex", alignItems: "center", gap: "6px" }}>
+                <span style={{
+                  display: "inline-block",
+                  width: "8px",
+                  height: "8px",
+                  border: "1.5px solid var(--text-secondary)",
+                  borderTopColor: "transparent",
+                  borderRadius: "50%",
+                  animation: "xcodeSpin 0.8s linear infinite"
+                }}></span>
+                Compiling Portfolio: {buildProgress}%
+              </span>
+            </div>
+          ) : (
+            <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              Running PortfolioApp (PID 4820)
+            </span>
+          )}
+        </div>
+      )}
+
       <div className={styles.tabbarActions}>
         <button
-          className={styles.toolbarBtn}
-          onClick={() => triggerToast("Compiling project binaries...")}
+          className={`${styles.toolbarBtn} ${isBuilding ? styles.toolbarBtnActive : ""}`}
+          onClick={buildProject}
+          disabled={isBuilding || isRunning}
           title="Build Project"
+          style={{ opacity: (isBuilding || isRunning) ? 0.4 : 1, cursor: (isBuilding || isRunning) ? "not-allowed" : "pointer" }}
         >
           <BuildIcon />
         </button>
         <button
-          className={styles.toolbarBtn}
-          onClick={() => triggerToast("Running Portfolio in Sandbox...")}
-          title="Run Project"
+          className={`${styles.toolbarBtn} ${isRunning ? styles.toolbarBtnActive : ""}`}
+          onClick={runProject}
+          disabled={isBuilding}
+          title={isRunning ? "Stop Project" : "Run Project"}
+          style={{ opacity: isBuilding ? 0.4 : 1, cursor: isBuilding ? "not-allowed" : "pointer" }}
         >
-          <PlayIcon />
+          {isRunning ? <StopIcon /> : <PlayIcon />}
         </button>
         <div className={styles.toolbarSeparator}></div>
         <button
