@@ -268,7 +268,7 @@ export function EditorWorkspace({
                   {proj.imageUrl ? (
                     <Image
                       src={proj.imageUrl}
-                      alt={`${proj.title} Mockup`}
+                      alt={`${proj.title} — ${proj.platform} app by Sharnabh Banerjee`}
                       fill
                       className={styles.cardImage}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"

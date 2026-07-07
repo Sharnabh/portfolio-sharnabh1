@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sharnabh.sbdevstudio.in/sitemap.xml

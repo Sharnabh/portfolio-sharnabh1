@@ -1,0 +1,19 @@
+{
+  "name": "Sharnabh Banerjee | iOS Developer Portfolio",
+  "short_name": "Sharnabh Portfolio",
+  "description": "Professional iOS Developer portfolio of Sharnabh Banerjee — native Swift/SwiftUI projects, App Store apps, and technical specifications.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e1e24",
+  "theme_color": "#007aff",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "developer", "technology"]
+}
