@@ -49,6 +49,7 @@ interface InspectorProps {
   setSyntaxTheme: (theme: string) => void;
   triggerToast: (msg: string) => void;
   isRightSidebarCollapsed: boolean;
+  setIsRightSidebarCollapsed: (collapsed: boolean) => void;
 
   // Inspector Tabs State
   activeInspectorTab: "identity" | "attributes" | "size";
@@ -80,6 +81,7 @@ export function Inspector({
   setSyntaxTheme,
   triggerToast,
   isRightSidebarCollapsed,
+  setIsRightSidebarCollapsed,
   activeInspectorTab,
   setActiveInspectorTab,
   editorFontSize,
@@ -100,8 +102,17 @@ export function Inspector({
       className={`${styles.inspector} ${isRightSidebarCollapsed ? styles.rightSidebarCollapsed : ""}`}
       style={{ width: isRightSidebarCollapsed ? 0 : `${inspectorWidth}px`, minWidth: isRightSidebarCollapsed ? 0 : `${inspectorWidth}px` }}
     >
-      <div className={styles.inspectorHeader}>
+      <div className={styles.inspectorHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span className={styles.inspectorTitle}>Inspector</span>
+        <button 
+          className={styles.mobileCloseBtn} 
+          onClick={() => setIsRightSidebarCollapsed(true)}
+          title="Collapse Inspector"
+        >
+          <svg width="10" height="10" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M1 1L7 7M7 1L1 7" />
+          </svg>
+        </button>
       </div>
 
       {/* Inspector Tabs */}

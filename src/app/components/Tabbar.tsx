@@ -143,24 +143,7 @@ export function Tabbar({
 
       {/* Xcode Center Status Bar */}
       {(isBuilding || isRunning) && (
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "rgba(0, 0, 0, 0.25)",
-          border: "1px solid var(--border-color)",
-          borderRadius: "6px",
-          height: "22px",
-          padding: "0 12px",
-          fontSize: "11px",
-          fontFamily: "var(--font-mono)",
-          color: "var(--text-secondary)",
-          maxWidth: "340px",
-          flex: 1,
-          margin: "0 16px",
-          position: "relative",
-          overflow: "hidden"
-        }}>
+        <div className={styles.xcodeStatusBar}>
           {isBuilding ? (
             <div style={{ display: "flex", alignItems: "center", width: "100%", height: "100%", justifyContent: "center" }}>
               <div style={{

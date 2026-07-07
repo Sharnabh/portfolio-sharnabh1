@@ -17,6 +17,7 @@ export default function Home() {
       <Sidebar
         activeFile={portfolio.activeFile}
         isLeftSidebarCollapsed={portfolio.isLeftSidebarCollapsed}
+        setIsLeftSidebarCollapsed={portfolio.setIsLeftSidebarCollapsed}
         openTab={portfolio.openTab}
         handleDownloadResume={portfolio.handleDownloadResume}
         setIsSettingsOpen={portfolio.setIsSettingsOpen}
@@ -76,6 +77,7 @@ export default function Home() {
         setSyntaxTheme={portfolio.setSyntaxTheme}
         triggerToast={portfolio.triggerToast}
         isRightSidebarCollapsed={portfolio.isRightSidebarCollapsed}
+        setIsRightSidebarCollapsed={portfolio.setIsRightSidebarCollapsed}
         
         // Tab states
         activeInspectorTab={portfolio.activeInspectorTab}
@@ -105,6 +107,17 @@ export default function Home() {
         setIsHelpOpen={portfolio.setIsHelpOpen}
         toastMessage={portfolio.toastMessage}
       />
+
+      {/* Backdrop overlay for mobile/tablet drawer sidebars */}
+      {(!portfolio.isLeftSidebarCollapsed || !portfolio.isRightSidebarCollapsed) && (
+        <div 
+          className={styles.backdrop} 
+          onClick={() => {
+            portfolio.setIsLeftSidebarCollapsed(true);
+            portfolio.setIsRightSidebarCollapsed(true);
+          }}
+        />
+      )}
     </div>
   );
 }

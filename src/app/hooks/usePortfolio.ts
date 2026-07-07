@@ -19,6 +19,20 @@ export function usePortfolio() {
   const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
   const [isRightSidebarCollapsed, setIsRightSidebarCollapsed] = useState(false);
 
+  const setLeftSidebarCollapsed = (collapsed: boolean) => {
+    setIsLeftSidebarCollapsed(collapsed);
+    if (!collapsed && typeof window !== "undefined" && window.innerWidth < 1024) {
+      setIsRightSidebarCollapsed(true);
+    }
+  };
+
+  const setRightSidebarCollapsed = (collapsed: boolean) => {
+    setIsRightSidebarCollapsed(collapsed);
+    if (!collapsed && typeof window !== "undefined" && window.innerWidth < 1024) {
+      setIsLeftSidebarCollapsed(true);
+    }
+  };
+
   // Project catalog specific states
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -148,6 +162,15 @@ export function usePortfolio() {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  // Auto-collapse sidebars on initial mount if screen is tablet/mobile
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isSmall = window.innerWidth < 1024;
+      setIsLeftSidebarCollapsed(isSmall);
+      setIsRightSidebarCollapsed(isSmall);
+    }
+  }, []);
+
   // Trigger Toast Notification
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
@@ -231,8 +254,8 @@ export function usePortfolio() {
     // Actions & State Setters
     openTab,
     closeTab,
-    setIsLeftSidebarCollapsed,
-    setIsRightSidebarCollapsed,
+    setIsLeftSidebarCollapsed: setLeftSidebarCollapsed,
+    setIsRightSidebarCollapsed: setRightSidebarCollapsed,
     setSelectedProject,
     setViewMode,
     setTheme,

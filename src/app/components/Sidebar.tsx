@@ -67,6 +67,7 @@ const HelpIcon = () => (
 interface SidebarProps {
   activeFile: string;
   isLeftSidebarCollapsed: boolean;
+  setIsLeftSidebarCollapsed: (collapsed: boolean) => void;
   openTab: (fileName: string) => void;
   handleDownloadResume: () => void;
   setIsSettingsOpen: (open: boolean) => void;
@@ -77,6 +78,7 @@ interface SidebarProps {
 export function Sidebar({
   activeFile,
   isLeftSidebarCollapsed,
+  setIsLeftSidebarCollapsed,
   openTab,
   handleDownloadResume,
   setIsSettingsOpen,
@@ -93,14 +95,25 @@ export function Sidebar({
       }}
     >
       <div>
-        <div className={styles.sidebarHeader}>
-          <span className={styles.ideLogo}>
-            <CodeIcon />
-          </span>
-          <div>
-            <span className={styles.ideTitle}>Project Navigator</span>
-            <span className={styles.ideVersion}>v1.0.0-stable</span>
+        <div className={styles.sidebarHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span className={styles.ideLogo}>
+              <CodeIcon />
+            </span>
+            <div>
+              <span className={styles.ideTitle}>Project Navigator</span>
+              <span className={styles.ideVersion}>v1.0.0-stable</span>
+            </div>
           </div>
+          <button 
+            className={styles.mobileCloseBtn} 
+            onClick={() => setIsLeftSidebarCollapsed(true)}
+            title="Collapse Sidebar"
+          >
+            <svg width="10" height="10" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M1 1L7 7M7 1L1 7" />
+            </svg>
+          </button>
         </div>
 
         <div className={styles.sidebarContent}>

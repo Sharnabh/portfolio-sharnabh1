@@ -342,9 +342,9 @@ export function EditorWorkspace({
       {activeFile === "Main.swift" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           {/* Top Panel Row */}
-          <div style={{ display: "flex", gap: "20px" }}>
+          <div className={styles.profileRow}>
             {/* Profile Card */}
-            <div style={{ flex: 2, background: "rgba(255, 255, 255, 0.02)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "24px", display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div className={styles.profileCard}>
               <div style={{ display: "flex", gap: "8px" }}>
                 <span style={{ fontSize: "9px", fontWeight: 700, padding: "2px 6px", borderRadius: "4px", backgroundColor: "rgba(48, 209, 88, 0.12)", color: "#30d158", border: "1px solid rgba(48, 209, 88, 0.2)" }}>
                   OPEN TO WORK
@@ -387,7 +387,7 @@ export function EditorWorkspace({
             </div>
 
             {/* Experience Summary Card */}
-            <div style={{ flex: 1, background: "rgba(255, 255, 255, 0.02)", border: "1px solid var(--border-color)", borderRadius: "10px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: "10px" }}>
+            <div className={styles.expSummaryCard}>
               <div style={{ fontSize: "32px", color: "#ffd60a" }}>🏆</div>
               <div>
                 <div style={{ fontSize: "28px", fontWeight: 800, color: "#ffffff" }}>{data.profile.experienceSummary}</div>
@@ -558,7 +558,7 @@ export function EditorWorkspace({
           </div>
 
           {/* Metrics Grid */}
-          <div className={styles.metricsGrid} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", marginBottom: "24px" }}>
+          <div className={styles.metricsGrid}>
             <div className={styles.metricCard} style={{ background: "rgba(255, 255, 255, 0.02)", border: "1px solid var(--border-color)", borderRadius: "8px", padding: "12px 16px", display: "flex", flexDirection: "column", gap: "4px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "10px", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase" }}>
                 <GlobeIcon /> Total Downloads
@@ -589,7 +589,7 @@ export function EditorWorkspace({
           </div>
 
           {/* Products Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "32px" }}>
+          <div className={styles.productsGrid}>
             {data.shippedProducts.products.map((prod) => (
               <div 
                 key={prod.id} 
@@ -658,7 +658,7 @@ export function EditorWorkspace({
                   {prod.description}
                 </p>
 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "4px" }}>
+                <div className={styles.productCardFooter}>
                   <div style={{ display: "flex", gap: "6px" }}>
                     {prod.tags.map((t) => (
                       <span key={t} className={styles.tag} style={{ fontSize: "9px" }}>{t}</span>
@@ -757,7 +757,7 @@ export function EditorWorkspace({
       {/* activeFile === "Contact.swift" */}
       {/* ---------------------------------------------------- */}
       {activeFile === "Contact.swift" && (
-        <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "20px", height: "100%", overflowY: "auto", width: "100%" }}>
+        <div className={styles.contactContainer}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {/* Terminal Title Bar */}
             <div 
@@ -784,19 +784,7 @@ export function EditorWorkspace({
             </div>
 
             {/* Terminal Window Content */}
-            <div 
-              style={{ 
-                background: "rgba(0, 0, 0, 0.35)", 
-                border: "1px solid var(--border-color)", 
-                borderBottomLeftRadius: "8px", 
-                borderBottomRightRadius: "8px", 
-                padding: "24px", 
-                fontFamily: "var(--font-mono)", 
-                fontSize: "12px", 
-                lineHeight: "1.6",
-                color: "#a9b2c3"
-              }}
-            >
+            <div className={styles.terminalWindow}>
               {/* Header Initialization lines */}
               <div style={{ color: "#5c6370", marginBottom: "16px" }}>
                 <div style={{ color: "#98c379" }}>System initialization complete.</div>
@@ -1002,17 +990,7 @@ export function EditorWorkspace({
 
       {/* Xcode Bottom Console Drawer */}
       {showConsole && (
-        <div style={{
-          height: "200px",
-          minHeight: "200px",
-          background: "#19191d",
-          borderTop: "1px solid var(--border-color)",
-          display: "flex",
-          flexDirection: "column",
-          fontFamily: "var(--font-mono)",
-          fontSize: "11px",
-          zIndex: 10
-        }}>
+        <div className={styles.consoleDrawer}>
           {/* Console Header / Action Toolbar */}
           <div style={{
             display: "flex",
